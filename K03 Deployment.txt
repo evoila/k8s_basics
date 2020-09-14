@@ -1,0 +1,39 @@
+1. Erstellen eines Deployments mit YAML
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-deployment
+spec:
+  replicas: 10
+  selector:
+    matchLabels:
+      app: deployment
+  template:
+    metadata:
+      labels:
+        app: deployment
+    spec:
+      containers:
+      - name: kuard
+        image: gcr.io/kuar-demo/kuard-amd64:blue
+
+2. Deployments anzeigen
+
+3. Pods anzeigen
+
+4. Deployment exposen mit LoadBalancer (um LoadBalancing zu demonstrieren)
+kubectl expose deployment demo-deployment --type LoadBalancer --port 8080
+
+5. Aufruf der Webseite um LoadBalancing zu demonstrieren
+
+6. Deployment Rolling Update auf :green umstellen
+kubectl edit deployment demo-deployment
+
+7. Deployment skalieren und Pods anzeigen
+kubectl scale deployment demo-deployment --replicas 1
+
+
+Hinweis: Kubernetes ensures that at least 75% of the desired number of Pods are up (25% max unavailable) and 
+         that at most 125% of the desired number of Pods are up (25% max surge).

@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pvc-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pvc
+  template:
+    metadata:
+      labels:
+        app: pvc
+    spec:
+      containers:
+      - name: nginx
+        image: nginx

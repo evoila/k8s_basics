@@ -1,0 +1,55 @@
+#######
+## 1) Config Map als YAML Datei + Pod mit Env Var. die aus dem config Map kommt.
+## 2) Vorhandene Config Map und Secret generiert aus einer Datei und in Pod als Volume injected.
+#######
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config-from-yaml
+  namespace: default
+data:
+  hostname: 10.10.10.10
+
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: config-map-pod
+spec:
+  containers:
+    - name: cm-container
+      image: nginx
+      env:
+        - name: MYSQL_HOSTNAME
+          valueFrom:
+            configMapKeyRef:
+              name: config-from-yaml
+              key: hostname
+  restartPolicy: Never
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: config-map-volume
+spec:
+  containers:
+    - name: config-map-volume
+      image: nginx
+      volumeMounts:
+      - name: config-volume
+        mountPath: /etc/config
+      - name: foo
+        mountPath: /etc/secrets
+        readOnly: true
+  volumes:
+    - name: config-volume
+      configMap:
+        name: special-config        # muss angelegt werden
+    - name: foo
+      secret:
+        secretName: mysecret        # muss angelegt werden
+  restartPolicy: Never
+

@@ -1,0 +1,19 @@
+1. Deployment eines Pods mit (imperative) 
+    kubectl run nginx --image nginx 
+2. Events anzeigen
+     kubectl get events
+3. Beschreiben eines Pods
+     kubectl describe pod nginx
+
+4. Deploy POD with yaml File
+     apiVersion: v1
+     kind: Pod
+     metadata:
+       name: myapp-pod
+       labels:
+         app: myapp
+     spec:
+       containers:
+         - name: myapp-container
+       image: busybox
+       command: ['sh', '-c', 'echo Hello Kubernetes! && sleep 3600']

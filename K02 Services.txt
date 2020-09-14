@@ -1,0 +1,34 @@
+1. Deployment eines Pods 
+    kubectl run nginx --image nginx --labels=app=service
+
+2. Exposen des Pods über die CLI als ClusterIP
+    kubectl expose deploy nginx --type ClusterIP --protocol TCP --name nginx-service --port 80
+3. Pod hochfahren und intern den nginx Service aufrufen 
+    kubectl run nginx --image nginx --restart Never -it --rm bash
+
+4. Exposen des Pods über die CLI als NodePort (Könnte nicht bei den Entwicklern funktionieren, da PKS)
+    kubectl expose pod nginx --type=NodePort --port=80
+
+5. Anzeigen des Services und zeigen des NodePorts
+
+6. Anzeigen der NodeIPs
+
+7. Aufrufen der Webseite über <Node_IP>:<NodePort>
+
+6. Anlegen eines Services über YAML
+apiVersion: v1
+kind: Service
+metadata:
+  name: lb-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: service
+  ports:
+  - protocol: TCP
+    port: 80
+
+7. Zeigen der Services und der External-IP. Darauf hinweisen, dass Applikation
+   immernoch über NodeIP:NodePort erreichbar ist!
+
+8. Aufrufen der External-IP

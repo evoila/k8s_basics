@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: envpod
+  labels:
+    app: envpod
+spec:
+  containers:
+  - name: envpod
+    image: nginx
+    env:
+    - name: SCHULUNG
+      value: "e2m"
+    - name: DEMO
+      value: "k8s"

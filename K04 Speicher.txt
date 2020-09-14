@@ -1,0 +1,96 @@
+########
+
+Erste Schritte ohne PV
+
+1. Erstellen eines Deployments ohne Speicher mit einer YAML
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pvc-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pvc
+  template:
+    metadata:
+      labels:
+        app: pvc
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+
+Achtung: Nicht das Deployment skalieren - Die spätere Definition unterstützt keine Skalierung des Speichers in einem Deployment
+
+2. Aktives Aufschalten auf den Container
+kubectl exec -it pvc-deployment-<ID> -- sh
+
+3. Anlegen einer Test Datei
+mkdir test
+echo "Hello World" > test/hello.txt
+cat test/hello.txt
+exit
+
+4. "Löschen" des Pods -> Ein neuer Pod wird erstellt -> Aufschalten und versuchen Sich Inhalt der Datei anzeigen zu lassen
+kubectl delete pod pvc-deployment-<ID>
+kubectl exec -it pvc-deployment-<NEW_ID> -- sh
+cat test/hello.txt
+
+Hier sollte eine Fehlermeldung erscheinen, dass die Datei nicht existiert.
+#########
+
+
+Manuell PVs anlegen
+#############
+
+5. govc datastore.disk.create -ds vsanDatastore -size 2G pks_sandbox_disk/myDisk.vmdk
+-> in vSphere Schauen
+
+6. anlegen PV 
+kubectl apply -f persisten-volume.yml 
+
+7. anlegen PVC 
+kubectl apply -f pvc.yml 
+
+8. Deployment with PVC 
+kubectl apply -f deploy-with-pv.yml
+
+9. Get Events 
+10: Versuchen das Deployment zu skalieren. Was passiert? 
+
+11. Delete resources.
+
+
+
+#################
+Dynamische Provisionierung mit PVC und Storage Class 
+
+12. Anlegen default storage Class
+kubectl apply -f storage-class-vsphere.yml 
+kubectl patch storageclass default-vsan -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
+
+
+
+6. Anlegen eines PersistentVolumeClaims
+kubectl apply -f pvc.yml 
+
+7. Anschauen des PersistentVolumes und des PersistentVolumeClaims
+kubectl get pv
+kubectl get pvc
+
+8. Anbinden des PVC an das Deployment
+kubectl apply -f deploy-with-pv.yml 
+
+9. Aktives Aufschalten auf Container und Anlegen einer Test Datei
+kubectl exec -it pvc-deployment-<ID> -- sh
+echo "Hello World" > test/hello.txt
+cat test/hello.txt
+exit
+
+10. Löschen des Containers, erneutes Aufschalten und validiren, dass Textdatei noch den gewünschten Content hat
+kubectl delete pod pvc-deployment-<ID>
+kubectl exec -it pvc-deployment-<NEW_ID> -- sh
+cat test/hello.txt
+
+Die gewünschte Datei sollte weiterhin vorhanden sein.

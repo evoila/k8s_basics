@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: demo-cmd-args
+  labels:
+    app: demo-cmd-args
+spec:
+  containers:
+  - name: cmd-args
+    image: busybox
+    command: ['cat']             # entspricht dem Entrypoint im Docker File
+    args: ['/etc/resolv.conf']   # entspricht dem CMD im Docker File
