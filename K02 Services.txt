@@ -4,7 +4,7 @@
 2. Exposen des Pods über die CLI als ClusterIP
     kubectl expose deploy nginx --type ClusterIP --protocol TCP --name nginx-service --port 80
 3. Pod hochfahren und intern den nginx Service aufrufen 
-    kubectl run nginx --image nginx --restart Never -it --rm bash
+    kubectl run nginx-1 --image nginx --restart Never -it --rm bash
 
 4. Exposen des Pods über die CLI als NodePort (Könnte nicht bei den Entwicklern funktionieren, da PKS)
     kubectl expose pod nginx --type=NodePort --port=80

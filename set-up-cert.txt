@@ -1,0 +1,26 @@
+1) Certificate Signing Request anlegen
+openssl req -new -newkey rsa:2048  -keyout mykey.key -out csr.csr -nodes
+
+2) Anzeigen CSR und Priv Key
+
+3) Erstellen csr api objekt
+
+kubectl apply -f create_csr.yml 
+
+4) CSR Approven
+kubectl certificate approve mdima
+
+5) CSR als YAML anzeigen und Zertifikat rausholen
+kubectl get csr mdima -o yaml
+
+6) Zertifikat im klar text entcoden und speichern
+echo -n '$cert' | base64 --decode > cert.cert
+
+7) Neue Entry in kubeconfig File anlegen für den neuen User
+8) Neue Entry in kubeconfig File anlegen für einen neuen Context
+
+9) Context Switch
+kubectl config use-context $context
+
+10) kubectl get pods (??)
+

@@ -60,9 +60,6 @@ kubectl apply -f deploy-with-pv.yml
 10: Versuchen das Deployment zu skalieren. Was passiert? 
 
 11. Delete resources.
-
-
-
 #################
 Dynamische Provisionierung mit PVC und Storage Class 
 
@@ -84,6 +81,7 @@ kubectl apply -f deploy-with-pv.yml
 
 9. Aktives Aufschalten auf Container und Anlegen einer Test Datei
 kubectl exec -it pvc-deployment-<ID> -- sh
+mkdir test
 echo "Hello World" > test/hello.txt
 cat test/hello.txt
 exit
