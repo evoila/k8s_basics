@@ -1,3 +1,4 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -26,7 +27,6 @@ spec:
 status: {}
 
 ---
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -55,7 +55,6 @@ spec:
 status: {}
 
 ---
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -84,7 +83,6 @@ spec:
 status: {}
 
 ---
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -113,7 +111,6 @@ spec:
 status: {}
 
 ---
-
 apiVersion: v1
 kind: Service
 metadata:
@@ -133,7 +130,6 @@ status:
   loadBalancer: {}
 
 ---
-
 apiVersion: v1
 kind: Service
 metadata:
@@ -153,7 +149,6 @@ status:
   loadBalancer: {}
 
 ---
-
 apiVersion: v1
 kind: Service
 metadata:
@@ -173,7 +168,6 @@ status:
   loadBalancer: {}
 
 ---
-
 apiVersion: v1
 kind: Service
 metadata:

@@ -33,23 +33,24 @@ spec:
 apiVersion: v1
 kind: Pod
 metadata:
-  name: config-map-volume
+  name: nginx-web-server
+  labels:
+    type: frontned
 spec:
   containers:
     - name: config-map-volume
       image: nginx
       volumeMounts:
       - name: config-volume
-        mountPath: /etc/config
-      - name: foo
-        mountPath: /etc/secrets
-        readOnly: true
+        mountPath: /etc/nginx/conf.d/
+      - name: frontend
+        mountPath: /usr/share/nginx/html/public/frontend
   volumes:
     - name: config-volume
       configMap:
-        name: special-config        # muss angelegt werden
-    - name: foo
-      secret:
-        secretName: mysecret        # muss angelegt werden
+        name: nginx-conf        # muss angelegt werden
+    - name: frontend
+      configMap:
+        name: frontend
   restartPolicy: Never
 

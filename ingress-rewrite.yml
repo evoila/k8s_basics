@@ -11,7 +11,7 @@ spec:
   - host: changeme.example.local
     http:
       paths:
-      - path: /testpath
+      - path: /api/(.*)
         backend:
-          serviceName: nginx
+          serviceName: python
           servicePort: 80
