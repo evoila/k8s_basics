@@ -1,8 +1,8 @@
 apiVersion: run.tanzu.vmware.com/v1alpha1
 kind: TanzuKubernetesCluster
 metadata:
-  name: from-argocd
-  namespace: argocd
+  name: cicd-tkc
+  namespace: from-argocd
 spec:
   distribution:
     version: v1.18.5
